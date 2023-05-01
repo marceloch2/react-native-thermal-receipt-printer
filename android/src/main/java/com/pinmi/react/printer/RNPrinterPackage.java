@@ -18,7 +18,6 @@ public class RNPrinterPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.asList(new NativeModule[]{
                 new RNUSBPrinterModule(reactContext),
-                new RNBLEPrinterModule(reactContext),
                 new RNNetPrinterModule(reactContext),
         });
     }

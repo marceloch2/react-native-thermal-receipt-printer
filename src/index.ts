@@ -3,7 +3,6 @@ import { NativeModules, NativeEventEmitter, Platform } from "react-native";
 import * as EPToolkit from "./utils/EPToolkit";
 
 const RNUSBPrinter = NativeModules.RNUSBPrinter;
-const RNBLEPrinter = NativeModules.RNBLEPrinter;
 const RNNetPrinter = NativeModules.RNNetPrinter;
 
 export interface PrinterOptions {
@@ -17,11 +16,6 @@ export interface IUSBPrinter {
   device_name: string;
   vendor_id: string;
   product_id: string;
-}
-
-export interface IBLEPrinter {
-  device_name: string;
-  inner_mac_address: string;
 }
 
 export interface INetPrinter {
@@ -126,74 +120,6 @@ export const USBPrinter = {
     RNUSBPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
       console.warn(error)
     ),
-};
-
-export const BLEPrinter = {
-  init: (): Promise<void> =>
-    new Promise((resolve, reject) =>
-      RNBLEPrinter.init(
-        () => resolve(),
-        (error: Error) => reject(error)
-      )
-    ),
-
-  getDeviceList: (): Promise<IBLEPrinter[]> =>
-    new Promise((resolve, reject) =>
-      RNBLEPrinter.getDeviceList(
-        (printers: IBLEPrinter[]) => resolve(printers),
-        (error: Error) => reject(error)
-      )
-    ),
-
-  connectPrinter: (inner_mac_address: string): Promise<IBLEPrinter> =>
-    new Promise((resolve, reject) =>
-      RNBLEPrinter.connectPrinter(
-        inner_mac_address,
-        (printer: IBLEPrinter) => resolve(printer),
-        (error: Error) => reject(error)
-      )
-    ),
-
-  closeConn: (): Promise<void> =>
-    new Promise((resolve) => {
-      RNBLEPrinter.closeConn();
-      resolve();
-    }),
-
-  printText: (text: string, opts: PrinterOptions = {}): void => {
-    if (Platform.OS === "ios") {
-      const processedText = textPreprocessingIOS(text);
-      RNBLEPrinter.printRawData(
-        processedText.text,
-        processedText.opts,
-        (error: Error) => console.warn(error)
-      );
-    } else {
-      RNBLEPrinter.printRawData(textTo64Buffer(text, opts), (error: Error) =>
-        console.warn(error)
-      );
-    }
-  },
-
-  printBill: (text: string, opts: PrinterOptions = {}): void => {
-    if (Platform.OS === "ios") {
-      const processedText = textPreprocessingIOS(text);
-      RNBLEPrinter.printRawData(
-        processedText.text,
-        processedText.opts,
-        (error: Error) => console.warn(error)
-      );
-    } else {
-      RNBLEPrinter.printRawData(billTo64Buffer(text, opts), (error: Error) =>
-        console.warn(error)
-      );
-    }
-  },
-
-  // printImage: async (imagePath: string) => {
-  //   const tmp = await imageToBuffer(imagePath);
-  //   RNBLEPrinter.printRawData(tmp, (error: Error) => console.warn(error));
-  // },
 };
 
 export const NetPrinter = {
