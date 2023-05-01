@@ -6,7 +6,6 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.pinmi.react.printer.adapter.BLEPrinterDeviceId;
 import com.pinmi.react.printer.adapter.NetPrinterAdapter;
 import com.pinmi.react.printer.adapter.NetPrinterDeviceId;
 import com.pinmi.react.printer.adapter.PrinterAdapter;
