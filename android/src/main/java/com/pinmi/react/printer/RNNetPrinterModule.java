@@ -47,32 +47,31 @@ public class RNNetPrinterModule extends ReactContextBaseJavaModule implements RN
         } catch (Exception ex) {
             errorCallback.invoke(ex.getMessage());
         }
-        // this.adapter.getDeviceList(errorCallback);
     }
 
     @ReactMethod
     public void connectPrinter(String host, Integer port, Callback successCallback, Callback errorCallback) {
-        adapter.selectDevice(NetPrinterDeviceId.valueOf(host, port), successCallback, errorCallback);
+        this.adapter.selectDevice(NetPrinterDeviceId.valueOf(host, port), successCallback, errorCallback);
     }
 
     @ReactMethod
     @Override
     public void printRawData(String base64Data, Callback errorCallback) {
-        adapter.printRawData(base64Data, errorCallback);
+        this.adapter.printRawData(base64Data, errorCallback);
     }
 
     @ReactMethod
     @Override
     public void printImageData(String imageUrl, Callback errorCallback) {
         Log.v("imageUrl", imageUrl);
-        adapter.printImageData(imageUrl, errorCallback);
+        this.adapter.printImageData(imageUrl, errorCallback);
     }
 
     @ReactMethod
     @Override
     public void printQrCode(String qrCode, Callback errorCallback) {
         Log.v("qrCode", qrCode);
-        adapter.printQrCode(qrCode, errorCallback);
+        this.adapter.printQrCode(qrCode, errorCallback);
     }
 
 
